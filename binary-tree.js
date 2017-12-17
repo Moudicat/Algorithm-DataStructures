@@ -141,6 +141,25 @@ class BinaryTree {
 
     return false;
   }
+
+  remove(val) {
+    return this._remove(this.root, val);
+  }
+
+  _remove(node, val) {
+    if (node === null) return false;
+
+    if (node.val === val) {
+      node = null;
+      return true;
+    } else if (node.val > val) {
+      return this._remove(node.left, val);
+    } else {
+      return this._remove(node.right, val);
+    }
+
+    return false;
+  }
 }
 
 var bt = new BinaryTree([7,1,5,2,6,3,8,9,10,15,4,12,56,1,2,0,4,-4]);
