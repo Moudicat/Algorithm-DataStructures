@@ -8,17 +8,19 @@ class Node {
 
 class BinaryTree {
 
-  constructor(...arg) {
+  constructor(...args) {
     this.root = null;
 
-    if (arg.length > 1) {
-      if (arg.every(val => typeof val === 'number')) {
-        arg.forEach(this.insert.bind(this));
+    if (args.length > 1) {
+      if (args.every(val => typeof val === 'number')) {
+        args.forEach(this.insert.bind(this));
       } else {
         throw new Error('Unknow Type!');
       }
-    } else if (arg.length === 1 && arg[0] instanceof Array) {
-      arg[0].forEach(this.insert.bind(this));
+    } else if (args.length === 1 && args[0] instanceof Array) {
+      args[0].forEach(this.insert.bind(this));
+    } else if (args.length === 1 && typeof args[0] === 'number') {
+      this.insert(args[0]);
     }
   }
 
@@ -162,6 +164,6 @@ class BinaryTree {
   }
 }
 
-var bt = new BinaryTree([7,1,5,2,6,3,8,9,10,15,4,12,56,1,2,0,4,-4]);
+export default BinaryTree;
 
-console.log(bt);
+// new BinaryTree([7,1,5,2,6,3,8,9,10,15,4,12,56,1,2,0,4,-4]);
