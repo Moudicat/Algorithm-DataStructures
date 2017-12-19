@@ -117,8 +117,7 @@ class Chain {
 	next() {
 		if (this.length === 0) return false;
 		if (this.POINTER === null) {
-			this.POINTER = this.TAIL;
-			throw new Error('Out of range');
+			return null;
 		}
 
 		let currVal = this.POINTER.val;
@@ -131,8 +130,7 @@ class Chain {
 	prev() {
 		if (this.length === 0) return false;
 		if (this.POINTER === null) {
-			this.POINTER = this.HEAD;
-			throw new Error('Out of range');
+			return null;
 		}
 
 		let currVal = this.POINTER.val;
