@@ -1,5 +1,5 @@
 /**
- * Bubble sort 冒泡排序
+ * Bubble sort 冒泡排序 | 交换排序
  * Complexity: O(n^2)
  * 
  * @param {Array} Input array
@@ -18,7 +18,7 @@ function bubbleSort(array) {
 }
 
 /**
- * Quick Sort  快速排序
+ * Quick Sort  快速排序 | 交换排序
  * Complexity: O(nlog n)
  * 
  * @param {Array} Input array
@@ -34,7 +34,7 @@ function quickSort(array) {
 }
 
 /**
- * Insertion Sort  直接插入排序
+ * Insertion Sort  直接插入排序 | 插入排序
  * Complexity: O(n^2)
  * 
  * @param {Array} Input array
@@ -55,7 +55,7 @@ function insertionSort(array) {
 }
 
 /**
- * Shell Sort 希尔排序（缩小增量排序、插入排序增强版）
+ * Shell Sort 希尔排序（缩小增量排序、插入排序增强版） | 插入排序
  * Complextity: O(nlog^2 n)
  * 
  * @param {Array} Input array
@@ -78,7 +78,7 @@ function shellSort(array) {
 }
 
 /**
- * Selection Sort 选择排序
+ * Selection Sort 选择排序 | 选择排序
  * Complextity: O(n^2)
  * 
  * @param {Array} Input array
@@ -87,6 +87,7 @@ function shellSort(array) {
 function selectionSort(array) {
   for (let i = 0; i < array.length - 1; i++) {
     let min = i;
+    // 找到最小序号 与当前i位置交换
     for (let j = i + 1; j < array.length; j++) {
       if (array[j] < array[min]) {
         min = j;
@@ -98,7 +99,7 @@ function selectionSort(array) {
 }
 
 /**
- * Heap Sort 堆排序
+ * Heap Sort 堆排序 | 选择排序
  * Complextity: O(nlog n)
  * 
  * @param {Array} Input array
@@ -106,31 +107,59 @@ function selectionSort(array) {
  */
 function heapSort(array) {
 
-  let heapify = (index) => {
+  // 堆化  将 小根堆 转换为 大根堆 使得堆顶元素最大 子叶最小  父节点子节点小于父节点
+  let heapify = (index, len) => {
     let leftIndex = index * 2 + 1, rightIndex = index * 2 + 2, maxIndex = -1;
 
-    if (leftIndex < array.length && array[leftIndex] > array[index]) {
+    if (leftIndex < len && array[leftIndex] >= array[index]) {
       maxIndex = leftIndex;
     }
-    if (rightIndex < array.length && array[rightIndex] > array[maxIndex]) {
+    if (rightIndex < len && array[rightIndex] >= array[maxIndex]) {
       maxIndex = rightIndex;
     }
 
     if (maxIndex !== -1) {
       [array[maxIndex], array[index]] = [array[index], array[maxIndex]];
-      if (maxIndex < array.length >> 1) {
-        heapify(maxIndex);
-      }
+      heapify(maxIndex, len);
     }
   };
  
   let buildHeap = () => {
     for (let i = (array.length >> 1) - 1; i >= 0; i--) {
-      heapify(i);
-    }
-  
-  }
- 
+      heapify(i, array.length);
+    }  
+  };
 
+  let sort = () => {
+    // 交换元素 并length-1重排
+    for(let j = array.length - 1; j > 0; j--) {
+      [array[0], array[j]] = [array[j], array[0]];
+      heapify(0, j);
+    }
+  };
+
+  buildHeap();
+  sort();
+  
   return array;
+}
+
+/**
+ * Merge Sort 并归排序 （分治法）| 并归排序
+ * Complextity: O(nlog n)
+ * 
+ * @param {Array} Input array
+ * @return {Array} Sorted array
+ */
+function mergeSort(array) {
+  if (array.length <= 1) return array;
+
+  let merge = (left, right) => {
+    let output = [];
+    while(left.length && right.length) {
+      output.push(left[0] <= right[0] ? left.shift() : right.shift());
+    }
+    return output.concat(left, right);
+  };
+  return merge(mergeSort(array.slice(0, array.length >> 1)), mergeSort(array.slice(array.length >> 1)));
 }
